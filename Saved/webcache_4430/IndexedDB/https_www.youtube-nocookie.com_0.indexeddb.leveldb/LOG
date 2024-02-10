@@ -1,0 +1,8 @@
+2024/01/08-20:58:02.141 9a8 Reusing MANIFEST C:/UnrealProjects/Slash/Saved/webcache_4430\IndexedDB\https_www.youtube-nocookie.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/01/08-20:58:02.142 9a8 Recovering log #4
+2024/01/08-20:58:02.142 9a8 Reusing old log C:/UnrealProjects/Slash/Saved/webcache_4430\IndexedDB\https_www.youtube-nocookie.com_0.indexeddb.leveldb/000004.log 
+2024/01/08-21:00:30.775 51dc Level-0 table #8: started
+2024/01/08-21:00:30.775 51dc Level-0 table #8: 0 bytes OK
+2024/01/08-21:00:30.780 51dc Delete type=0 #4
+2024/01/08-21:00:30.780 51dc Manual compaction at level-0 from (begin) .. (end); will stop at (end)
+2024/01/08-21:00:30.780 51dc Manual compaction at level-1 from (begin) .. (end); will stop at (end)
