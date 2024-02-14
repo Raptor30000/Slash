@@ -3,6 +3,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Pawns/Bird.h"
+#include "EnhancedInputSubsystems.h"
 
 
 ABird::ABird()
@@ -23,6 +24,13 @@ ABird::ABird()
 void ABird::BeginPlay()
 {
 	Super::BeginPlay();
+
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	if (PlayerController)
+	{
+		//UEnhancedInputLocalPlayerSubsystem* Subsystem;
+	}
+
 }
 
 void ABird::MoveForward(float Value)
