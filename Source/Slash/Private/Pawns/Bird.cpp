@@ -4,6 +4,8 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Pawns/Bird.h"
 #include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
+#include "Components/InputComponent.h"
 
 
 ABird::ABird()
@@ -25,10 +27,12 @@ void ABird::BeginPlay()
 {
 	Super::BeginPlay();
 
-	APlayerController* PlayerController = Cast<APlayerController>(GetController());
-	if (PlayerController)
+	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
 	{
-		//UEnhancedInputLocalPlayerSubsystem* Subsystem;
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		{
+			Subsystem->AddMappingContext(BirdMappingContext, 0);
+		}
 	}
 
 }
@@ -36,6 +40,15 @@ void ABird::BeginPlay()
 void ABird::MoveForward(float Value)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Moving forward: %f"), Value)
+}
+
+void ABird::Move(const FInputActionValue& Value)
+{
+	const bool CurrentValue = Value.Get<bool>();
+	if (CurrentValue)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("IA_Move Triggered"));
+	}
 }
 
 void ABird::Tick(float DeltaTime)
@@ -49,7 +62,12 @@ void ABird::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ABird::MoveForward);
+	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
+	{
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABird::Move);
+	}
+
+	//PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ABird::MoveForward);
 
 }
 
