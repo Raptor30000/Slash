@@ -9,6 +9,8 @@
 
 class UInputMappingContext;
 class UInputAction;
+class USpringArmComponent;
+class UCameraComponent;
 
 UCLASS()
 class SLASH_API ASlashCharacter : public ACharacter
@@ -21,8 +23,10 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 protected:
-	void MoveForward(float Value);
 	virtual void BeginPlay() override;
+	void MoveForward(float Value);
+	void Turn(float Value);
+	void LookUp(float Value);
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputMappingContext* SlashContext;
@@ -31,5 +35,14 @@ protected:
 	UInputAction* MovementAction;
 
 	void Move(const FInputActionValue& Value);
+
+private:
+
+	UPROPERTY(VisibleAnywhere, Category = "Camera")
+	USpringArmComponent* SpringArm;
+
+	UPROPERTY(VisibleAnywhere, Category = "Camera")
+	UCameraComponent* ViewCamera;
+
 
 };
