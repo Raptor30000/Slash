@@ -81,16 +81,31 @@ void ASlashCharacter::Move(const FInputActionValue& Value)
 {
 	const FVector2D MovementValue = Value.Get<FVector2D>();
 	
-	const FVector Forward = GetActorForwardVector();
-	AddMovementInput(Forward, MovementValue.Y);
+	//const FVector Forward = GetActorForwardVector();
+	//AddMovementInput(Forward, MovementValue.Y);
 
-	const FVector Right = GetActorRightVector();
-	AddMovementInput(Right, MovementValue.X);
+	//const FVector Right = GetActorRightVector();
+	//AddMovementInput(Right, MovementValue.X);
 
-	//const FRotator Rotator = Controller->GetControlRotation();
-	//const FRotator YawRotation(0.f, Rotator.Yaw, 0.f);
+	const FRotator Rotator = Controller->GetControlRotation();
+	const FRotator YawRotation(0.f, Rotator.Yaw, 0.f);
 
-	
+	const FVector DirectionX = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	const FVector DirectionY = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+	AddMovementInput(DirectionX, MovementValue.Y);
+	AddMovementInput(DirectionY, MovementValue.X);
+
+
+}
+
+void ASlashCharacter::Look(const FInputActionValue& Value)
+{
+	const FVector2D LookDirection = Value.Get<FVector2D>();
+
+	AddControllerPitchInput(LookDirection.Y);
+	AddControllerYawInput(LookDirection.X);
+
 }
 
 void ASlashCharacter::Tick(float DeltaTime)
@@ -105,12 +120,13 @@ void ASlashCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked< UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		//EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ASlashCharacter::Move);
+		EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ASlashCharacter::Move);
+		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ASlashCharacter::Look);
 	}
 
-	PlayerInputComponent->BindAxis(FName("MoveForward"), this, &ASlashCharacter::MoveForward);
-	PlayerInputComponent->BindAxis(FName("MoveRight"), this, &ASlashCharacter::MoveRight);
-	PlayerInputComponent->BindAxis(FName("Turn"), this, &ASlashCharacter::Turn);
-	PlayerInputComponent->BindAxis(FName("LookUp"), this, &ASlashCharacter::LookUp);
+	//PlayerInputComponent->BindAxis(FName("MoveForward"), this, &ASlashCharacter::MoveForward);
+	//PlayerInputComponent->BindAxis(FName("MoveRight"), this, &ASlashCharacter::MoveRight);
+	//PlayerInputComponent->BindAxis(FName("Turn"), this, &ASlashCharacter::Turn);
+	//PlayerInputComponent->BindAxis(FName("LookUp"), this, &ASlashCharacter::LookUp);
 }
 
