@@ -7,11 +7,18 @@
 #include "Components/InputComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 ASlashCharacter::ASlashCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	bUseControllerRotationRoll = false;
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationYaw = false;
+
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->RotationRate = FRotator(0.f, 400.f, 0.f);
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(GetRootComponent());
@@ -27,9 +34,23 @@ void ASlashCharacter::MoveForward(float Value)
 {
 	if (Controller && (Value != 0.f))
 	{
-		FVector Forward = GetActorForwardVector();
-		AddMovementInput(Forward, Value);
+
+
+		const FRotator ControlRotation = GetControlRotation();
+		const FRotator YawRotation(0.f, ControlRotation.Yaw, 0.f);
+
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		AddMovementInput(Direction, Value);
 	}
+}
+
+void ASlashCharacter::MoveRight(float Value)
+{
+	const FRotator ControlRotation = GetViewRotation();
+	const FRotator YawRotation(0.f, ControlRotation.Yaw, 0.f);
+
+	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	AddMovementInput(Direction, Value);
 }
 
 void ASlashCharacter::Turn(float Value)
@@ -84,10 +105,11 @@ void ASlashCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked< UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ASlashCharacter::Move);
+		//EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &ASlashCharacter::Move);
 	}
 
-	//PlayerInputComponent->BindAxis(FName("MoveForward"), this, &ASlashCharacter::MoveForward);
+	PlayerInputComponent->BindAxis(FName("MoveForward"), this, &ASlashCharacter::MoveForward);
+	PlayerInputComponent->BindAxis(FName("MoveRight"), this, &ASlashCharacter::MoveRight);
 	PlayerInputComponent->BindAxis(FName("Turn"), this, &ASlashCharacter::Turn);
 	PlayerInputComponent->BindAxis(FName("LookUp"), this, &ASlashCharacter::LookUp);
 }
