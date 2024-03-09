@@ -52,7 +52,7 @@ void AItem::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 
 void AItem::OnSphereOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	const FString OtherActorName = OtherActor->GetName();
+	const FString OtherActorName = FString(TEXT("EndSphereOverlap")) + OtherActor->GetName();
 	if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(1, 30, FColor::Yellow, OtherActorName);
