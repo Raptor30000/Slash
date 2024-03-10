@@ -12,6 +12,7 @@
 
 Content/*
 !Content/Blueprints/
+!Content/Mixamo/
 
 Intermediate/*
 Saved/*
