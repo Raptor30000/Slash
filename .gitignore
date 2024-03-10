@@ -9,8 +9,9 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.uasset
-*.unmap
+
+Content/*
+!Content/Blueprints/
 
 Intermediate/*
 Saved/*
