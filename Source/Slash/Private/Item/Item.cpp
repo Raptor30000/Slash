@@ -48,6 +48,8 @@ void AItem::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 	{
 		GEngine->AddOnScreenDebugMessage(1, 30, FColor::Red, OtherActorName);
 	}
+
+	
 }
 
 void AItem::OnSphereOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
