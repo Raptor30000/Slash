@@ -27,6 +27,9 @@ public:
 	virtual void Jump() override;
 
 protected:
+	/*
+	* Callbacks for input functions wo EI
+	*/
 	virtual void BeginPlay() override;
 	void MoveForward(float Value);
 	void MoveRight(float Value);
@@ -35,6 +38,9 @@ protected:
 	void EKeyPressed();
 	void Attack();
 
+	/*
+	* Callbacks for input functions with EI
+	*/
 
 
 	UPROPERTY(EditAnywhere, Category = "Input")
@@ -51,12 +57,18 @@ protected:
 
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+	/**
+	* Play montage funtions
+	*/
 
+	void PlayAttackMontage();
 
 private:
 
 	UPROPERTY()
 	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
+
+	EActionState ActionState = EActionState::EAS_Unocuppied;
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera")
 	USpringArmComponent* SpringArm;
