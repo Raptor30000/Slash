@@ -33,6 +33,7 @@ protected:
 	void Turn(float Value);
 	void LookUp(float Value);
 	void EKeyPressed();
+	void Attack();
 
 
 
@@ -71,6 +72,12 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly, Category = "Item")
 	AItem* OverlappingItem;
+
+	/**
+	* Animation Montages
+	*/
+	UPROPERTY(EditDefaultsOnly, Category = "Montages")
+	UAnimMontage* AttackMontage;
 
 public:
 	FORCEINLINE void SetOverlappingItem(AItem* Item) { OverlappingItem = Item; };
