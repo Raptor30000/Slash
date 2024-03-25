@@ -68,6 +68,7 @@ private:
 	UPROPERTY()
 	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
 
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	EActionState ActionState = EActionState::EAS_Unocuppied;
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera")
@@ -90,6 +91,11 @@ private:
 	*/
 	UPROPERTY(EditDefaultsOnly, Category = "Montages")
 	UAnimMontage* AttackMontage;
+
+	UFUNCTION(BlueprintCallable)
+	void AttackEnd();
+
+	bool CanAttack();
 
 public:
 	FORCEINLINE void SetOverlappingItem(AItem* Item) { OverlappingItem = Item; };
