@@ -117,6 +117,8 @@ void ASlashCharacter::BeginPlay()
 
 void ASlashCharacter::Move(const FInputActionValue& Value)
 {
+	if (ActionState == EActionState::EAS_Attacking) return;
+
 	const FVector2D MovementValue = Value.Get<FVector2D>();
 	
 	//const FVector Forward = GetActorForwardVector();
