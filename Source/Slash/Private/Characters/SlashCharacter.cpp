@@ -12,6 +12,7 @@
 #include "Item/Item.h"
 #include "Item/Weapons/Weapon.h"
 #include "Animation/AnimInstance.h"
+#include "Components/BoxComponent.h"
 
 ASlashCharacter::ASlashCharacter()
 {
@@ -267,5 +268,13 @@ void ASlashCharacter::Jump()
 {
 	Super::Jump();
 
+}
+
+void ASlashCharacter::SetWeaponCollisionEnabled(ECollisionEnabled::Type EnabledCollision)
+{
+	if (EquippedWeapon && EquippedWeapon->GetWeaponBox())
+	{
+		EquippedWeapon->GetWeaponBox()->SetCollisionEnabled(EnabledCollision);
+	}
 }
 

@@ -27,6 +27,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Jump() override;
 
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponCollisionEnabled(ECollisionEnabled::Type EnabledCollision);
+
 protected:
 	/*
 	* Callbacks for input functions wo EI
