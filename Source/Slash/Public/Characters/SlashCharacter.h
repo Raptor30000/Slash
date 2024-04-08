@@ -66,7 +66,7 @@ protected:
 	*/
 
 	void PlayAttackMontage();
-	void PlayEquipMontage(FName SectionName);
+	void PlayEquipMontage(const FName& SectionName);
 
 private:
 
