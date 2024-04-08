@@ -14,7 +14,7 @@ class UHitInterface : public UInterface
 };
 
 /**
- * 
+ *
  */
 class SLASH_API IHitInterface
 {
