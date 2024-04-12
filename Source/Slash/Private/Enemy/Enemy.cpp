@@ -49,6 +49,12 @@ void AEnemy::GetHit(const FVector& ImpactPoint)
 	DRAW_SPHERE_COLOR(ImpactPoint, FColor::Orange);
 	
 
+	DirectionalHitReact(ImpactPoint);
+	
+}
+
+void AEnemy::DirectionalHitReact(const FVector& ImpactPoint)
+{
 	const FVector Forward = GetActorForwardVector();
 	const FVector ImpactLowered(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
 	const FVector ToHit = (ImpactLowered - GetActorLocation()).GetSafeNormal();
@@ -93,6 +99,5 @@ void AEnemy::GetHit(const FVector& ImpactPoint)
 
 	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + Forward * 60.f, 5.f, FLinearColor::Red, 5.f);
 	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + ToHit * 60.f, 5.f, FLinearColor::Green, 5.f);
-	
 }
 
