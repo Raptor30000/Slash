@@ -5,12 +5,16 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/AttributeComponent.h"
+#include "Components/WidgetComponent.h"
 
 AEnemy::AEnemy()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
 	Attributes = CreateDefaultSubobject<UAttributeComponent>(FName("Attributes"));
+
+	HealthBarWidget = CreateDefaultSubobject<UWidgetComponent>(FName("HealthBar"));
+	HealthBarWidget->SetupAttachment(GetRootComponent());
 
 }
 
