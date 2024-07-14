@@ -4,10 +4,13 @@
 #include "Slash/DebugMacros.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/AttributeComponent.h"
 
 AEnemy::AEnemy()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	Attributes = CreateDefaultSubobject<UAttributeComponent>(FName("Attributes"));
 
 }
 
