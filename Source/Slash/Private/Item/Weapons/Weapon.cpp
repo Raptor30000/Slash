@@ -8,6 +8,7 @@
 #include "Components\BoxComponent.h"
 #include "Kismet\KismetSystemLibrary.h"
 #include "Interfaces/HitInterface.h"
+#include "NiagaraComponent.h"
 
 
 
@@ -37,6 +38,11 @@ void AWeapon::Equip(USceneComponent* InParent, FName InSocketName)
 {
 	AttachMeshToSocket(InParent, InSocketName);
 	ItemState = EItemState::EIS_Equipped;
+	if (EmbersEffect) 
+	{
+		EmbersEffect->Deactivate();
+	}
+	
 }
 
 void AWeapon::AttachMeshToSocket(USceneComponent* InParent, const FName& InSocketName)
