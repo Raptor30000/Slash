@@ -52,21 +52,27 @@ void AEnemy::Die()
 		{
 		case 0:
 			SelectionName = FName("Death1");
+			DeathPose = EDeathPose::EDP_Death1;
 			break;
 		case 1:
 			SelectionName = FName("Death2");
+			DeathPose = EDeathPose::EDP_Death2;
 			break;
 		case 2:
 			SelectionName = FName("Death3");
+			DeathPose = EDeathPose::EDP_Death3;
 			break;
 		case 3:
 			SelectionName = FName("Death4");
+			DeathPose = EDeathPose::EDP_Death4;
 			break;
 		case 4:
 			SelectionName = FName("Death5");
+			DeathPose = EDeathPose::EDP_Death5;
 			break;
 		case 5:
 			SelectionName = FName("Death6");
+			DeathPose = EDeathPose::EDP_Death6;
 			break;
 		default:
 			break;
