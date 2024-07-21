@@ -7,7 +7,9 @@
 #include "Components/AttributeComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HUD/HealthBarComponent.h"
+#include "Perception/PawnSensingComponent.h"
 #include "AIController.h"
+
 
 AEnemy::AEnemy()
 {
@@ -23,6 +25,9 @@ AEnemy::AEnemy()
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
 
+	PawnSensing = CreateDefaultSubobject<UPawnSensingComponent>(FName("PawnSensing"));
+	PawnSensing->SetPeripheralVisionAngle(45.f);
+	PawnSensing->SightRadius = 4000.f;
 }
 
 void AEnemy::BeginPlay()
@@ -43,6 +48,11 @@ void AEnemy::BeginPlay()
 	EnemyController = Cast<AAIController>(GetController());
 	
 	MoveToTarget(PatrolTarget);
+
+	if (PawnSensing)
+	{
+		PawnSensing->OnSeePawn.AddDynamic(this, &AEnemy::PawnSeen);
+	}
 }
 
 void AEnemy::PlayHitReactMontage(const FName& SectionName)
@@ -144,6 +154,11 @@ AActor* AEnemy::ChoosePatrolTarget()
 	return nullptr;
 }
 
+void AEnemy::PawnSeen(APawn* SeenPawn)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Pawn Seen!"));
+}
+
 void AEnemy::PatrolTimerFinished()
 {
 	MoveToTarget(PatrolTarget);
@@ -163,7 +178,7 @@ void AEnemy::CheckPatrolTarget()
 	{
 		PatrolTarget = ChoosePatrolTarget();
 		const float WaitTime = FMath::RandRange(WaitMin, WaitMax);
-		GetWorldTimerManager().SetTimer(PatrolTimer, this, &AEnemy::PatrolTimerFinished, PatrolWaitTime);
+		GetWorldTimerManager().SetTimer(PatrolTimer, this, &AEnemy::PatrolTimerFinished, WaitTime);
 	}
 }
 
