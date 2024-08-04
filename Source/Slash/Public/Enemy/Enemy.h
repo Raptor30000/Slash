@@ -32,6 +32,8 @@ protected:
 	virtual void BeginPlay() override;
 
 	virtual void Die() override;
+	virtual void Attack() override;
+	virtual void PlayAttackMontage() override;
 
 	UPROPERTY(BlueprintReadOnly)
 	EDeathPose DeathPose = EDeathPose::EDP_Alive;
