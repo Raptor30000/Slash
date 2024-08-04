@@ -26,6 +26,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+	virtual void Destroyed() override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -50,9 +51,8 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	UPawnSensingComponent* PawnSensing;
 
-	/**
-	* Animation Montages
-	*/
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AWeapon> WeaponClass;
 
 	UPROPERTY()
 	AActor* CombatTarget;
