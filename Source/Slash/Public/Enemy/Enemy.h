@@ -35,8 +35,7 @@ protected:
 	virtual void Attack() override;
 	virtual void PlayAttackMontage() override;
 
-	UPROPERTY(BlueprintReadOnly)
-	EDeathPose DeathPose = EDeathPose::EDP_Alive;
+
 
 	bool InTargetRange(AActor* Target, double Radius);
 	void MoveToTarget(AActor* Target);
@@ -44,6 +43,12 @@ protected:
 
 	UFUNCTION()
 	void PawnSeen(APawn* SeenPawn);
+
+	UPROPERTY(BlueprintReadOnly)
+	EDeathPose DeathPose;
+
+	UPROPERTY(BlueprintReadOnly)
+	EEnemyState EnemyState = EEnemyState::EES_Patrolling;
 
 private:
 
@@ -89,6 +94,33 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "AI Navigation")
 	float WaitMax = 10.f;
+	
+	/** AI behavior*/
+	void HideHealthBar();
+	void ShowHealthBar();
+	void LoseInterest();
+	void StartPatrolling();
+	void ChaseTarget();
+	bool IsOutsideCombatRadius();
+	bool IsOutsideAttackRadius();
+	bool IsInsideAttakRadius();
+	bool IsChasing();
+	bool IsAttaking();
 
-	EEnemyState EnemyState = EEnemyState::EES_Patrolling;
+	/** Combat */
+	void StartAttackTimer();
+
+	FTimerHandle AttakTimer;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float AttackMin = 0.5f;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float AttackMax = 1.f;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float PatrollingSpeed = 125.f;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float ChasingSpeed = 300.f;
 };
