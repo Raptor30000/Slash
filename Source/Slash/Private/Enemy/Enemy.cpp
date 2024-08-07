@@ -26,6 +26,7 @@ AEnemy::AEnemy()
 	PawnSensing = CreateDefaultSubobject<UPawnSensingComponent>(FName("PawnSensing"));
 	PawnSensing->SetPeripheralVisionAngle(45.f);
 	PawnSensing->SightRadius = 4000.f;
+
 }
 
 void AEnemy::BeginPlay()
@@ -74,6 +75,7 @@ void AEnemy::Die()
 
 void AEnemy::Attack()
 {
+	EnemyState = EEnemyState::EES_Engaged;
 	Super::Attack();
 	PlayAttackMontage();
 }
@@ -82,6 +84,7 @@ bool AEnemy::CanAttack()
 {
 	bool bCanAttack = IsInsideAttakRadius() &&
 		!IsAttaking() &&
+		!IsEngaged() &&
 		!IsDead();
 	return bCanAttack;
 }
@@ -106,6 +109,12 @@ int32 AEnemy::PlayDeathMontage()
 	}
 
 	return Selection;
+}
+
+void AEnemy::AttackEnd()
+{
+	EnemyState = EEnemyState::EES_NoState;
+	CheckCombatTarget();
 }
 
 bool AEnemy::InTargetRange(AActor* Target, double Radius)
