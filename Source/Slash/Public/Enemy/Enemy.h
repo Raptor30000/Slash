@@ -21,7 +21,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	void CheckPatrolTarget();
 	void CheckCombatTarget();
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void GetHit_Implementation(const FVector& ImpactPoint) override;
 
 	UFUNCTION(BlueprintCallable)
@@ -34,8 +33,8 @@ protected:
 	virtual void Die() override;
 	virtual void Attack() override;
 	virtual void PlayAttackMontage() override;
-
-
+	virtual bool CanAttack() override;
+	virtual void HandleDamage(float DamageAmount) override;
 
 	bool InTargetRange(AActor* Target, double Radius);
 	void MoveToTarget(AActor* Target);
@@ -106,9 +105,13 @@ private:
 	bool IsInsideAttakRadius();
 	bool IsChasing();
 	bool IsAttaking();
+	bool IsDead();
+	bool IsEngaged();
+	void ClearPatrolTimer();
 
 	/** Combat */
 	void StartAttackTimer();
+	void ClearAttackTimer();
 
 	FTimerHandle AttakTimer;
 
