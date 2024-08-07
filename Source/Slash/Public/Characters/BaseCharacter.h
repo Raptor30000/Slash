@@ -32,8 +32,13 @@ protected:
 	void PlayHitSound(const FVector& ImpactPoint);
 	void SpawnHitParticles(const FVector& ImpactPoint);
 	virtual void HandleDamage(float DamageAmount);
+	void PlayMontageSection(UAnimMontage* Montage, const FName& SectionName);
+	int32 PlayRandomMontageSection(UAnimMontage* Montage, const TArray<FName>& SectionNames);
+	virtual int32 PlayAttackMontage();
+	virtual int32 PlayDeathMontage();
+	void DisableCapsule();
 
-	virtual void PlayAttackMontage();
+
 	virtual bool CanAttack();
 	bool IsAlive();
 	virtual void Die();
@@ -55,6 +60,12 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Montages")
 	UAnimMontage* DeathMontage;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TArray<FName> AttackMontageSections;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TArray<FName> DeathMontageSections;
 
 	/*
 	* Components
