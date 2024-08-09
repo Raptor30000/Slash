@@ -22,15 +22,12 @@ class SLASH_API ASlashCharacter : public ABaseCharacter
 
 public:
 	ASlashCharacter();
-	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Jump() override;
 
 
 protected:
-	/*
-	* Callbacks for input functions wo EI
-	*/
+	/** Callbacks for input functions wo EI */
 	virtual void BeginPlay() override;
 	void MoveForward(float Value);
 	void MoveRight(float Value);
@@ -39,10 +36,15 @@ protected:
 	void EKeyPressed();
 	virtual void Attack() override;
 
-	/*
-	* Callbacks for input functions with EI
-	*/
-
+	/** Combat */
+	void EquipWeapon(AWeapon* Weapon);
+	virtual void AttackEnd() override;
+	virtual bool CanAttack() override;
+	bool CanDisarm();
+	bool CanArm();
+	void Disarm();
+	void Arm();
+	void PlayEquipMontage(const FName& SectionName);
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputMappingContext* SlashContext;
@@ -58,19 +60,9 @@ protected:
 
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
-	/**
-	* Play montage funtions
-	*/
-
-	void PlayEquipMontage(const FName& SectionName);
 
 private:
-
-	UPROPERTY()
-	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
-
-	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	EActionState ActionState = EActionState::EAS_Unocuppied;
+	/** Character components */
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera")
 	USpringArmComponent* SpringArm;
@@ -91,21 +83,20 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Montages")
 	UAnimMontage* EquipMontage;
 
-	virtual void AttackEnd() override;
-
-	virtual bool CanAttack() override;
-
-	bool CanDisarm();
-	bool CanArm();
+	UFUNCTION(BlueprintCallable)
+	void AttachWeponToBack();
 
 	UFUNCTION(BlueprintCallable)
-	void Disarm();
-
-	UFUNCTION(BlueprintCallable)
-	void Arm();
+	void AttachWeponToHand();
 
 	UFUNCTION(BlueprintCallable)
 	void FinishEquipping();
+
+	UPROPERTY()
+	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
+
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	EActionState ActionState = EActionState::EAS_Unocuppied;
 
 public:
 	FORCEINLINE void SetOverlappingItem(AItem* Item) { OverlappingItem = Item; };
