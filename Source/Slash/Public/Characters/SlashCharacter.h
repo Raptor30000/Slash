@@ -14,6 +14,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UGroomComponent;
 class AItem;
+class USlashOverlay;
 
 UCLASS()
 class SLASH_API ASlashCharacter : public ABaseCharacter
@@ -64,6 +65,9 @@ protected:
 	void Look(const FInputActionValue& Value);
 
 private:
+
+	void InitializeSlashOverlay();
+
 	/** Character components */
 
 	UPROPERTY(VisibleAnywhere, Category = "Camera")
@@ -102,6 +106,9 @@ private:
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	EActionState ActionState = EActionState::EAS_Unocuppied;
+
+	UPROPERTY()
+	USlashOverlay* SlashOverlay;
 
 public:
 	FORCEINLINE void SetOverlappingItem(AItem* Item) { OverlappingItem = Item; };
