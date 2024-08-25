@@ -73,18 +73,27 @@ void ASlashCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	PlayerInputComponent->BindAction(FName("Attack"), EInputEvent::IE_Pressed, this, &ASlashCharacter::Attack);
 }
 
+void ASlashCharacter::Jump()
+{
+	if (IsUnoccupied())
+	{
+		Super::Jump();
+	}
+}
+
 float ASlashCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	HandleDamage(DamageAmount);
+	SetHUDHealth();
 	return DamageAmount;
 }
 
-void ASlashCharacter::GetHit_Implementation(const FVector& ImpactPoint, AActor* Hitter)
+void ASlashCharacter::SetHUDHealth()
 {
-	Super::GetHit_Implementation(ImpactPoint, Hitter);
-
-	SetWeaponCollisionEnabled(ECollisionEnabled::NoCollision);
-	ActionState = EActionState::EAS_HitReaction;
+	if (SlashContext && Attributes)
+	{
+		SlashOverlay->SetHealthBarPercent(Attributes->GetHealthPercent());
+	}
 }
 
 void ASlashCharacter::BeginPlay()
@@ -282,10 +291,9 @@ void ASlashCharacter::Look(const FInputActionValue& Value)
 
 }
 
-void ASlashCharacter::Jump()
+bool ASlashCharacter::IsUnoccupied()
 {
-	Super::Jump();
-
+	return ActionState == EActionState::EAS_Unocuppied;
 }
 
 void ASlashCharacter::InitializeSlashOverlay()
@@ -307,3 +315,12 @@ void ASlashCharacter::InitializeSlashOverlay()
 		}
 	}
 }
+
+void ASlashCharacter::GetHit_Implementation(const FVector& ImpactPoint, AActor* Hitter)
+{
+	Super::GetHit_Implementation(ImpactPoint, Hitter);
+
+	SetWeaponCollisionEnabled(ECollisionEnabled::NoCollision);
+	ActionState = EActionState::EAS_HitReaction;
+}
+
