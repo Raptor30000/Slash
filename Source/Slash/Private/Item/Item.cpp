@@ -19,8 +19,8 @@ AItem::AItem()
 	Sphere = CreateDefaultSubobject<USphereComponent>(FName("Sphere"));
 	Sphere->SetupAttachment(GetRootComponent());
 
-	EmbersEffect = CreateDefaultSubobject<UNiagaraComponent>(FName("Embers"));
-	EmbersEffect->SetupAttachment(GetRootComponent());
+	ItemEffect = CreateDefaultSubobject<UNiagaraComponent>(FName("Embers"));
+	ItemEffect->SetupAttachment(GetRootComponent());
 }
 
 void AItem::BeginPlay()
