@@ -217,7 +217,9 @@ void AEnemy::LoseInterest()
 
 void AEnemy::StartPatrolling()
 {
-
+	EnemyState = EEnemyState::EES_Patrolling;
+	GetCharacterMovement()->MaxWalkSpeed = PatrollingSpeed;
+	MoveToTarget(PatrolTarget);
 }
 
 void AEnemy::ChaseTarget()

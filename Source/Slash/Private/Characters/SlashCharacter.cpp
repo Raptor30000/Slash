@@ -13,6 +13,7 @@
 #include "Components/AttributeComponent.h"
 #include "Item/Item.h"
 #include "Item/Weapons/Weapon.h"
+#include "Interfaces/PickupInterface.h"
 #include "Animation/AnimInstance.h"
 #include "HUD/SlashHUD.h"
 #include "HUD/SlashOverlay.h"
@@ -333,5 +334,15 @@ void ASlashCharacter::GetHit_Implementation(const FVector& ImpactPoint, AActor* 
 	{
 		ActionState = EActionState::EAS_HitReaction;
 	}
+}
+
+void ASlashCharacter::SetOverlappingItem(AItem* Item)
+{
+	OverlappingItem = Item;
+}
+
+void ASlashCharacter::AddSouls(ASoul* Soul)
+{
+	UE_LOG(LogTemp, Warning, TEXT("ASlashCharacter::AddSouls"));
 }
 
