@@ -15,7 +15,8 @@ class USpringArmComponent;
 class UCameraComponent;
 class UGroomComponent;
 class AItem;
-class Soul;
+class ASoul;
+class ATreasue;
 class USlashOverlay;
 
 UCLASS()
@@ -32,6 +33,7 @@ public:
 	virtual void GetHit_Implementation(const FVector& ImpactPoint, AActor* Hitter) override;
 	virtual void SetOverlappingItem(AItem* Item) override;
 	virtual void AddSouls(ASoul* Soul) override;
+	virtual void AddGold(ATreasure* Treasure) override;
 
 protected:
 	/** Callbacks for input functions wo EI */

@@ -17,6 +17,9 @@
 #include "Animation/AnimInstance.h"
 #include "HUD/SlashHUD.h"
 #include "HUD/SlashOverlay.h"
+#include "Item/Soul.h"
+#include "Item/Treasure.h"
+
 
 
 ASlashCharacter::ASlashCharacter()
@@ -343,6 +346,21 @@ void ASlashCharacter::SetOverlappingItem(AItem* Item)
 
 void ASlashCharacter::AddSouls(ASoul* Soul)
 {
-	UE_LOG(LogTemp, Warning, TEXT("ASlashCharacter::AddSouls"));
+	if (Attributes && SlashContext)
+	{
+		Attributes->AddSouls(Soul->GetSouls());
+		SlashOverlay->SetSouls(Attributes->GetSouls());
+	}
+}
+
+void ASlashCharacter::AddGold(ATreasure* Treasure)
+{
+	{
+		if (Attributes && SlashContext)
+		{
+			Attributes->AddGold(Treasure->GetGold());
+			SlashOverlay->SetGold(Attributes->GetGold());
+		}
+	}
 }
 
