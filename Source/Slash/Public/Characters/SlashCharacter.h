@@ -26,6 +26,7 @@ class SLASH_API ASlashCharacter : public ABaseCharacter, public IPickupInterface
 
 public:
 	ASlashCharacter();
+	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Jump() override;
 
@@ -57,6 +58,8 @@ protected:
 	void Arm();
 	void PlayEquipMontage(const FName& SectionName);
 	virtual void Die() override;
+	bool HasEnoughStamina();
+	bool IsOccupied();
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	UInputMappingContext* SlashContext;
